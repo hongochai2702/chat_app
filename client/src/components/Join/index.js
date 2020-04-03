@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import * as routes from "../../constants/routes";
-import "./styles.css";
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import * as routes from '../../constants/routes';
+import './styles.css';
 
 const Join = () => {
-  const [name, setName] = useState("");
-  const [room, setRoom] = useState("");
+  const [name, setName] = useState('');
+  const [room, setRoom] = useState('');
 
   return (
     <div className="joinOuterContainer">
@@ -16,7 +16,7 @@ const Join = () => {
             type="text"
             placeholder="Name"
             className="joinInput"
-            onChange={ev => setName(ev.target.value)}
+            onChange={(ev) => setName(ev.target.value)}
             value={name}
           />
         </div>
@@ -25,12 +25,12 @@ const Join = () => {
             type="text"
             placeholder="Room"
             className="joinInput mt-20"
-            onChange={ev => setRoom(ev.target.value)}
+            onChange={(ev) => setRoom(ev.target.value)}
             value={room}
           />
         </div>
         <Link
-          onClick={event => (!name || !room ? event.preventDefault() : null)}
+          onClick={(event) => (!name || !room ? event.preventDefault() : null)}
           to={`${routes.CHAT}?name=${name}&room=${room}`}
         >
           <button className="button mt-20" type="submit">
