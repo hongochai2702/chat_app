@@ -42,4 +42,4 @@ const Join = () => {
   );
 };
 
-export default Join;
+export default React.memo(Join);

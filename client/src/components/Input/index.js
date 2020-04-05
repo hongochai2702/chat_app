@@ -10,9 +10,6 @@ const Input = ({ setMessage, sendMessage, message }) => {
         placeholder="Type a message ..."
         value={message}
         onChange={(event) => setMessage(event.target.value)}
-        onKeyPress={(event) => {
-          return event.key === 'Enter' ? sendMessage(event) : null;
-        }}
       />
       <button
         type="submit"
@@ -25,4 +22,4 @@ const Input = ({ setMessage, sendMessage, message }) => {
   );
 };
 
-export default Input;
+export default React.memo(Input);

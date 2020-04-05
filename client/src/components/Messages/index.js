@@ -15,4 +15,4 @@ const Messages = ({ messages, name }) => {
   );
 };
 
-export default Messages;
+export default React.memo(Messages);

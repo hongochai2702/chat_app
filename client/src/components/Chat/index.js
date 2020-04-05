@@ -12,40 +12,23 @@ import Messages from '../Messages';
 let socket;
 
 const Chat = ({ location }) => {
-  const [currName, setCurrName] = useState('');
-  const [currRoom, setCurrRoom] = useState('');
+  const { name, room } = queryString.parse(location.search);
+  const [currName, setCurrName] = useState(name);
+  const [currRoom, setCurrRoom] = useState(room);
   const [message, setMessage] = useState('');
-  const [users, setUsers] = useState('');
   const [messages, setMessages] = useState([]);
-  const ENDPOINT = 'localhost:5000';
+  const ENDPOINT = 'https://app-chat-gl.herokuapp.com/';
 
   useEffect(() => {
-    const { name, room } = queryString.parse(location.search);
-    console.log(name, room);
-
-    socket = io(ENDPOINT);
-
     setCurrName(name);
     setCurrRoom(room);
-
+    socket = io(ENDPOINT);
     socket.emit('join', { name: currName, room: currRoom }, (error) => {
-      console.log(`join: ${currName}`, currRoom);
       if (error) {
         alert(error);
       }
     });
-  }, [ENDPOINT, location.search, currName, currRoom]);
-
-  useEffect(() => {
-    socket.on('message', (mess) => {
-      setMessages([...messages, mess]);
-    });
-
-    socket.on('roomData', ({ users }) => {
-      setUsers(users);
-    });
-  }, [messages]);
-  console.log('users', users);
+  }, [ENDPOINT, location.search]);
 
   // Function for sending messages.
   const sendMessage = (event) => {
@@ -53,10 +36,11 @@ const Chat = ({ location }) => {
 
     if (message) {
       socket.emit('sendMessage', message, () => setMessage(''));
+      socket.on('message', (mess) => {
+        setMessages([...messages, mess]);
+      });
     }
   };
-
-  console.log(message, messages);
 
   return (
     <>
@@ -75,4 +59,4 @@ const Chat = ({ location }) => {
   );
 };
 
-export default Chat;
+export default React.memo(Chat);
